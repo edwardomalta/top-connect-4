@@ -11,8 +11,16 @@ describe Board do
   end
 
   describe "#lines" do
-    it 'returns the lines' do
-      expect().to be
+    subject(:board_structure) { described_class.new }
+
+    it 'is an Array' do
+      expect(board_structure.lines).to be_an(Array)
+    end
+    it 'has N arrays in it' do
+      expect(board_structure.lines.length).to eq(board_structure.height)
+    end
+    it 'has in every line an array of N elements' do
+      expect(board_structure.lines).to all(have_attributes(length: board_structure.width))
     end
   end
   
