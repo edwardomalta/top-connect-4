@@ -9,6 +9,12 @@ describe Board do
       end
     end
   end
+
+  describe "#lines" do
+    it 'returns the lines' do
+      expect().to be
+    end
+  end
   
   describe "#column_is_full?" do
     context "when a column is full" do

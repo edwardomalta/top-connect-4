@@ -1,7 +1,10 @@
 class Display
-  def show_board(board: nil)
+  def show_board(board = nil)
     puts "Nothing to show." unless board
     return unless board
-    puts "whatever"
+    puts "------"
+    board.lines.each do |line|
+      puts line
+    end
   end
 end
