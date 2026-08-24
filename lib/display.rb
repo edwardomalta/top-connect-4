@@ -3,15 +3,18 @@ class Display
     puts "Nothing to show." unless board
     return unless board
 
+    print "   "
     board.width.times do |i|
       print " #{i}"
     end
     print "\n"
-
+    
+    counter = 0
     board.lines.each do |line|
-      print "|"
+      print " #{counter} |"
       print line.join("|")
       print "|\n"
+      counter += 1
     end
   end
 end

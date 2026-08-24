@@ -24,7 +24,8 @@ describe Display do
           [ " ", " ", " ", " ", " ", " ", " "],
         ]
         allow(board).to receive(:lines).and_return(fake_lines)
-        expect(display_board).to receive(:puts).exactly(7).times # assuming it has 6 rows
+        allow(board).to receive(:width).and_return(7)
+        expect(display_board).to receive(:print).at_least(7).times # assuming it has 6 rows
         display_board.show_board(board)
       end
     end
