@@ -21,7 +21,18 @@ class Board
     column_elements.none?(" ")
   end
 
+  def column(col_nmb)
+    current_lines = lines
+    current_lines.map { |line| line[col_nmb] }
+  end
+
   def lines
     @lines
+  end
+
+  def col_last_empty_slot(col_nmb)
+    current_column = column(col_nmb)
+    line_index = current_column.rindex(" ")
+    [line_index, col_nmb]
   end
 end

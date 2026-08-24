@@ -34,4 +34,50 @@ describe Board do
       end
     end
   end
+
+  describe "#column" do
+    subject(:board_column) { described_class.new }
+    it "returns an array of lenght of the @height" do
+      column_nmb = 2
+      result = board_column.column(column_nmb)
+      expect(result.length).to eq(board_column.height)
+    end
+  end
+
+  describe "#col_last_empty_slot" do
+    subject(:board_empty_slot) { described_class.new }
+    context "when the column is empty" do
+      before do
+        allow(board_empty_slot).to receive(:column).and_return(
+          Array.new(board_empty_slot.height, " ") 
+        )
+      end
+      it "returns the index of the last slot: line 5" do
+        col_nmb = 2
+        line, col = board_empty_slot.col_last_empty_slot(col_nmb)
+        expect(line).to eq(5)
+        expect(col).to eq(2)
+      end
+    end
+
+    context "when the column has 3 used slots" do
+      before do
+        my_col = Array.new(board_empty_slot.height, " ")
+        3.times do |i|
+          my_col[-(i+1)] = "X"
+        end
+        allow(board_empty_slot).to receive(:column).and_return(my_col)
+      end
+      it "returns line 2" do
+        col_nmb = 3
+        line, col = board_empty_slot.col_last_empty_slot(col_nmb)
+        expect(line).to eq(2)
+        expect(col).to eq(3)
+      end
+    end
+    context "when it is almost full" do
+      it "returns 0" do
+      end
+    end
+  end
 end
