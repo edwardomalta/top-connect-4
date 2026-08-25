@@ -5,7 +5,8 @@ describe Board do
     context "when it receives a move" do
       subject(:board_token) { described_class.new }
       it "registers and update its state" do
-        expect { board_token.receive_token(1, "O") }.to change(board_token, :slots)
+        lines = board_token.lines
+        expect { board_token.receive_token(1, "O") }.to change { board_token.lines }
       end
     end
   end
