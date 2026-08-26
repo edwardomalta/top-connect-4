@@ -1,14 +1,35 @@
 require_relative "../lib/game"
+require_relative "../lib/display"
 
 describe Game do
   context "when it starts" do
     subject(:game_start) { described_class.new }
-    it "says hello" do
-      expect(game_start).to receive(:puts).with("Hello 4!").once
+    let(:Display) { double("Display") }
+    before do
+      game_start.instance_variable_set(:@display, Display)
+      allow(Display).to receive(:show_board)
+      allow(game_start).to receive(:player_input).and_return(5)
+      allow(game_start).to receive(:game_over?).and_return(true)
+    end
+    it "welcomes the player" do
+      message = "Welcome to a new game of Connect Four"
+      expect(game_start).to receive(:puts).with(message).once
+      game_start.start
+    end
+    it "prints the board" do
+      expect(Display).to receive(:show_board).once
+      game_start.start
+    end
+    it "makes a player move" do
+      expect(game_start).to receive(:player_input).once
+      game_start.start
+    end
+    it "ends when game_over? condition is meet" do
+      expect(game_start).to receive(:game_over?).once
       game_start.start
     end
   end
-  context "when it receives the correct input" do
+  context "when receives the correct input" do
     subject(:game_input) { described_class.new }
     number_input = '5'
     before do
