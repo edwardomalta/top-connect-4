@@ -38,12 +38,36 @@ describe Pointer do
         expect { pointer_vertical.move_vertical(1) }
           .not_to change { pointer_vertical.current_position[1] }
       end
+    end
 
-      context "when moving backwards" do
-        it "goes up by minus one" do
-          expect { pointer_vertical.move_vertical(-1) }
-            .to change { pointer_vertical.current_position[0] }.by(-1) 
-        end
+    context "when moving backwards" do
+      it "goes up by minus one" do
+        expect { pointer_vertical.move_vertical(-1) }
+          .to change { pointer_vertical.current_position[0] }.by(-1) 
+      end
+    end
+  end
+
+  describe "#move_slash" do # this is /
+    origin = [3, 3]
+    subject(:pointer_slash) { described_class.new(origin) }
+    context "when moving forwards one step" do
+      it "decreases lines and increases cols" do
+        expect { pointer_slash.move_slash(1) }
+          .to change { pointer_slash.current_position[0] }.by(-1)
+          .and change { pointer_slash.current_position[1] }.by(1)
+      end
+    end
+  end
+
+  describe "#move_backslash" do # this is \
+    origin = [3, 3]
+    subject(:pointer_backslash) { described_class.new(origin) }
+    context "when moving forwards one step" do
+      it "decreases both lines and cols" do
+        expect { pointer_backslash.move_backslash(1) }
+          .to change { pointer_backslash.current_position[0] }.by(-1)
+          .and change { pointer_backslash.current_position[1] }.by(-1)
       end
     end
   end

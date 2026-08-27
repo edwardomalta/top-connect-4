@@ -12,6 +12,16 @@ class Pointer
   def move_vertical(steps)
     @current_position[0] += steps
   end
+
+  def move_slash(steps)
+    @current_position[0] -= steps
+    @current_position[1] += steps
+  end
+
+  def move_backslash(steps)
+    @current_position[0] -= steps
+    @current_position[1] -= steps
+  end
 end
 
 # tal vez para el futuro
