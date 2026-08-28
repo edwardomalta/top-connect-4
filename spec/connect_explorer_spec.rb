@@ -23,9 +23,19 @@ describe ConnectExplorer do
   end
   describe "#explore" do
     let(:board) { double("board") }
-    position = [4, 5]
+    position = [1, 1]
     subject(:explore_full_range) { described_class.new(board) }
+    before do
+      matrix = [
+        [ " ", " ", " " ],
+        [ " ", "Z", " " ],
+        [ " ", " ", " " ]
+      ]
+      allow(board).to receive(:lines).and_return(matrix)
+      explore_full_range.instance_variable_set(:@position, [1, 2])
+    end
     context "when receives a position" do
+      #require "pry-byebug"; binding.pry;
       it "returns an array of counts of every direction" do
         result = explore_full_range.explore(position)
         expect(result).to be_an(Array).and all(be_an(Integer)).and all(be >= 1)

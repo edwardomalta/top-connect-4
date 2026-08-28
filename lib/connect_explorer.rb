@@ -14,11 +14,38 @@ class ConnectExplorer
     ]
   end
   def horizontal
-    count = 0
-    
+    count_forward = 0
+    pointer_forward = Pointer.new(@position, @board.lines)
+    loop do
+      pointer_forward.move_horizontal(1)
+      break if (pointer_forward.symbol != pointer_forward.current_symbol) or @board.out_of_board?(pointer_forward.current_position)
+      count_forward += 1
+    end
+    count_backward = 0
+    pointer_backward = Pointer.new(@position, @board.lines)
+    loop do
+      pointer_backward.move_horizontal(-1)
+      break if (pointer_backward.symbol != pointer_backward.current_symbol) or @board.out_of_board?(pointer_backward.current_position)
+      count_backward +=1
+    end
+    count_forward + count_backward
   end
   def vertical
-    count = 0
+    count_forward = 0
+    pointer_forward = Pointer.new(@position, @board.lines)
+    loop do
+      pointer_forward.move_vertical(1)
+      break if (pointer_forward.symbol != pointer_forward.current_symbol) or @board.out_of_board?(pointer_backward.current_position)
+      count_forward += 1
+    end
+    count_backward = 0
+    pointer_backward = Pointer.new(@position, @board.lines)
+    loop do
+      pointer_backward.move_vertical(-1)
+      break if (pointer_backward.symbol != pointer_backward.current_symbol) or @board.out_of_board?(pointer_backward.current_position)
+      count_backward += 1
+    end
+    count_forward + count_backward
   end
   def slash
     count = 0
