@@ -1,12 +1,12 @@
 class Board
   attr_reader :slots, :height, :width, :lines
 
-  def initialize(width = 7, height = 6)
+  def initialize(height = 6, width = 7)
     @slots = Array.new(42, " ")
     @width = width
     @height = height
     @lines = create_lines(width, height)
-  end
+  end 
 
   def create_lines(width, height)
     Array.new(height) { Array.new(width, " ") }
@@ -31,5 +31,12 @@ class Board
     current_column = column(col_nmb)
     line_index = current_column.rindex(" ")
     [line_index, col_nmb]
+  end
+
+  def out_of_board?(position)
+    line, col = *position
+    line_range = 0..(@height - 1)
+    col_range = 0..(@width - 1)
+    not (line_range.include?(line)) or not (col_range.include?(col))
   end
 end

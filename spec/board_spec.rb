@@ -76,8 +76,24 @@ describe Board do
         expect(col).to eq(3)
       end
     end
-    context "when it is almost full" do
-      it "returns 0" do
+  end
+
+  describe "#out_of_board?" do
+    subject(:board) { described_class.new }
+    context "when the position is inside the board" do
+      it "is false" do
+        inboard = [0, 0]
+        expect(board.out_of_board?(inboard)).to be(false)
+      end
+    end
+    context "when the position is out of the board" do
+      it "is true if -1, -1" do
+        outboard = [-1, -1]
+        expect(board.out_of_board?(outboard)).to be(true)
+      end
+      it "is true if 6, 7 (limits of the default board)" do
+        outboard = [6, 7]
+        expect(board.out_of_board?(outboard)).to be(true)
       end
     end
   end

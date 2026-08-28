@@ -1,5 +1,11 @@
+require_relative "pointer"
+
 class ConnectExplorer 
-  def explore(position, board)
+  def initialize(board)
+    @board = board
+  end
+  def explore(position)
+    @position = position
     [
       (1 + horizontal),
       (1 + vertical), 
@@ -9,6 +15,7 @@ class ConnectExplorer
   end
   def horizontal
     count = 0
+    
   end
   def vertical
     count = 0
