@@ -33,7 +33,7 @@ describe ConnectExplorer do
   describe "#backslash" do
   end
   describe "#explore" do
-    let(:board) { double("board") }
+    let(:board) { Board.new(3, 3) }
     position = [1, 1]
     subject(:explore_full_range) { described_class.new(board) }
     before do
@@ -42,14 +42,11 @@ describe ConnectExplorer do
         [ " ", "Z", " " ],
         [ " ", " ", " " ]
       ]
-      allow(board).to receive(:lines).and_return(matrix)
-      allow(board).to receive(:out_of_board?).and_return(false)
-      allow(board).to receive(:different_symbols?) #.and_return(true, false)
+      board.instance_variable_set(:@line, matrix)
       explore_full_range.instance_variable_set(:@position, [1, 2])
     end
     context "when receives a position" do
-      #require "pry-byebug"; binding.pry;
-      xit "returns an array of counts of every direction" do
+      it "returns an array of counts of every direction" do
         result = explore_full_range.explore(position)
         expect(result).to be_an(Array).and all(be_an(Integer)).and all(be >= 1)
       end
