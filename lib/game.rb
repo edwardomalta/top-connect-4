@@ -1,7 +1,9 @@
 require_relative "display"
 require_relative "board"
+require_relative "connect_explorer"
 
 class Game
+  attr_reader :winner
   def initialize
     @display = Display.new
     @board = Board.new
@@ -17,9 +19,21 @@ class Game
     loop do
       @display.show_board(@board)
       @board.receive_token(player_input, current_player_symbol)
+      update_game_status
       break if game_over?
       @count += 1
     end
+  end
+
+  def update_game_status
+    @winner = current_player_name if move_wins?
+  end
+
+  def move_wins?
+    require "pry-byebug"; binding.pry if @count > 9
+    explorer = ConnectExplorer.new(@board)
+    result = explorer.explore(@board.current_token_at)
+    result.any? { |n| n < 3 }
   end
 
   def player_input

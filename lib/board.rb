@@ -1,5 +1,5 @@
 class Board
-  attr_reader :slots, :height, :width, :lines
+  attr_reader :slots, :height, :width, :lines, :current_token_at
 
   def initialize(height = 6, width = 7)
     @slots = Array.new(42, " ")
@@ -15,6 +15,7 @@ class Board
   def receive_token(column, symbol)
     line, col = col_last_empty_slot(column)
     @lines[line][col] = symbol
+    @current_token_at = [line, col]
   end
 
   def column_is_full?(column)
