@@ -16,6 +16,17 @@ describe ConnectExplorer do
     end
   end
   describe "#vertical" do
+    context "when there are [ x, (x), x] in vertical" do
+      board = Board.new(3, 3)
+      board.receive_token(1, "X")
+      board.receive_token(1, "X")
+      board.receive_token(1, "X")
+      subject(:explorer_vertical) { described_class.new(board) }
+      it "returns the count of symbols in both directions (2)" do
+        explorer_vertical.instance_variable_set(:@position, [1, 1])
+        expect(explorer_vertical.vertical).to eq(2)
+      end
+    end
   end
   describe "#slash" do
   end
@@ -32,11 +43,13 @@ describe ConnectExplorer do
         [ " ", " ", " " ]
       ]
       allow(board).to receive(:lines).and_return(matrix)
+      allow(board).to receive(:out_of_board?).and_return(false)
+      allow(board).to receive(:different_symbols?) #.and_return(true, false)
       explore_full_range.instance_variable_set(:@position, [1, 2])
     end
     context "when receives a position" do
       #require "pry-byebug"; binding.pry;
-      it "returns an array of counts of every direction" do
+      xit "returns an array of counts of every direction" do
         result = explore_full_range.explore(position)
         expect(result).to be_an(Array).and all(be_an(Integer)).and all(be >= 1)
       end

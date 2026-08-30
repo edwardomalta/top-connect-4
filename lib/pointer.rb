@@ -3,8 +3,6 @@ class Pointer
   def initialize(origin, matrix = nil)
     @origin = origin # it will be an array for now
     @current_position = @origin.dup
-    @matrix = matrix
-    @symbol = current_symbol if matrix
   end
 
   def move_horizontal(steps)
@@ -25,9 +23,18 @@ class Pointer
     @current_position[1] -= steps
   end
 
+  # deprecated
   def current_symbol
     #require "pry-byebug"; binding.pry;
     @matrix[@current_position[0]][@current_position[1]]
+  end
+
+  def out_of_board?
+    @board.out_of_board?(@current_position)
+  end
+
+  def same_symbol?
+    @current_symbol 
   end
 end
 

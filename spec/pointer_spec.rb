@@ -71,25 +71,4 @@ describe Pointer do
       end
     end
   end
-
-  describe "#current_symbol" do
-    origin = [1, 1]
-    matrix = [ 
-      [" ", " ", " "],
-      [" ", "X", "O"],
-      [" ", " ", " "],
-    ]
-    subject(:pointer_current) { described_class.new(origin, matrix) }
-    context "when given a matrix" do
-      it "returns the symbol of the original position" do
-        expect(pointer_current.current_symbol).to eq("X")
-      end
-    end
-    context "when given a martrix and moved a step" do
-      it "returns the current symbol" do
-        pointer_current.move_horizontal(1)
-        expect(pointer_current.current_symbol).to eq("O")
-      end
-    end
-  end
 end

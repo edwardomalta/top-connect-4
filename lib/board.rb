@@ -39,4 +39,10 @@ class Board
     col_range = 0..(@width - 1)
     not (line_range.include?(line)) or not (col_range.include?(col))
   end
+
+  def different_symbols?(origin, current)
+    x0, y0 = *origin
+    x1, y1 = *current
+    @lines[x0][y0] != @lines[x1][y1]
+  end
 end

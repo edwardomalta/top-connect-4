@@ -1,6 +1,9 @@
 require_relative "pointer"
 
 class ConnectExplorer 
+  FORWARD = 1
+  BACKWARD = -1
+
   def initialize(board)
     @board = board
   end
@@ -13,44 +16,37 @@ class ConnectExplorer
       (1 + backslash)
     ]
   end
+
+  def symbol_counter(cardinal_move, direction)
+    count = 0
+    pointer = Pointer.new(@position, @board.lines)
+    loop do
+      pointer.send(cardinal_move, direction)
+      break if @board.out_of_board?(pointer.current_position) or 
+        @board.different_symbols?(pointer.origin, pointer.current_position)
+      count += 1
+    end
+    count
+  end
+
   def horizontal
-    count_forward = 0
-    pointer_forward = Pointer.new(@position, @board.lines)
-    loop do
-      pointer_forward.move_horizontal(1)
-      break if (pointer_forward.symbol != pointer_forward.current_symbol) or @board.out_of_board?(pointer_forward.current_position)
-      count_forward += 1
-    end
-    count_backward = 0
-    pointer_backward = Pointer.new(@position, @board.lines)
-    loop do
-      pointer_backward.move_horizontal(-1)
-      break if (pointer_backward.symbol != pointer_backward.current_symbol) or @board.out_of_board?(pointer_backward.current_position)
-      count_backward +=1
-    end
-    count_forward + count_backward
+    move = :move_horizontal
+    symbol_counter(move, FORWARD) + 
+    symbol_counter(move, BACKWARD)
   end
   def vertical
-    count_forward = 0
-    pointer_forward = Pointer.new(@position, @board.lines)
-    loop do
-      pointer_forward.move_vertical(1)
-      break if (pointer_forward.symbol != pointer_forward.current_symbol) or @board.out_of_board?(pointer_backward.current_position)
-      count_forward += 1
-    end
-    count_backward = 0
-    pointer_backward = Pointer.new(@position, @board.lines)
-    loop do
-      pointer_backward.move_vertical(-1)
-      break if (pointer_backward.symbol != pointer_backward.current_symbol) or @board.out_of_board?(pointer_backward.current_position)
-      count_backward += 1
-    end
-    count_forward + count_backward
+    move = :move_vertical
+    symbol_counter(move, FORWARD) + 
+    symbol_counter(move, BACKWARD)
   end
   def slash
-    count = 0
+    move = :move_slash
+    symbol_counter(move, FORWARD) + 
+    symbol_counter(move, BACKWARD)
   end
   def backslash
-    count = 0
+    move = :move_backslash
+    symbol_counter(move, FORWARD) + 
+    symbol_counter(move, BACKWARD)
   end
 end
