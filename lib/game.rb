@@ -23,6 +23,16 @@ class Game
       break if game_over?
       @count += 1
     end
+    announce_winner
+  end
+
+  def announce_winner
+    if @winner.nil?
+      puts "We have tables!"
+    else
+      puts "Congrats!"
+      puts "Winner is #{@winner}"
+    end
   end
 
   def update_game_status
@@ -30,10 +40,10 @@ class Game
   end
 
   def move_wins?
-    require "pry-byebug"; binding.pry if @count > 9
+    #require "pry-byebug"; binding.pry if @count > 9
     explorer = ConnectExplorer.new(@board)
     result = explorer.explore(@board.current_token_at)
-    result.any? { |n| n < 3 }
+    result.any? { |n| n > 3 }
   end
 
   def player_input
@@ -55,6 +65,6 @@ class Game
   end
 
   def game_over?
-    @count > 42
+    @count > 42 || (!@winner.nil?)
   end
 end

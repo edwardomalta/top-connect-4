@@ -14,6 +14,18 @@ describe ConnectExplorer do
         expect(explorer_horizontal.horizontal).to eq(2)
       end
     end
+    context "when there are [ x, (x), x, x]" do
+      board = Board.new(3, 4)
+      board.receive_token(0, "X")
+      board.receive_token(1, "X")
+      board.receive_token(2, "X")
+      board.receive_token(3, "X")
+      subject(:explorer_horizontal) { described_class.new(board) }
+      it "returns the count of simbols in both directions (3)" do
+        explorer_horizontal.instance_variable_set(:@position, [2, 1])
+        expect(explorer_horizontal.horizontal).to eq(3)
+      end
+    end
   end
   describe "#vertical" do
     context "when there are [ x, (x), x] in vertical" do
@@ -24,6 +36,10 @@ describe ConnectExplorer do
       subject(:explorer_vertical) { described_class.new(board) }
       it "returns the count of symbols in both directions (2)" do
         explorer_vertical.instance_variable_set(:@position, [1, 1])
+        expect(explorer_vertical.vertical).to eq(2)
+      end
+      it "returns the count of symbols in both directions (2)" do
+        explorer_vertical.instance_variable_set(:@position, [0, 1])
         expect(explorer_vertical.vertical).to eq(2)
       end
     end
